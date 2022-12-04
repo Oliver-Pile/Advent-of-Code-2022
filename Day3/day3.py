@@ -1,25 +1,24 @@
 import string
-file = open("Day3\day3.txt",'r')
 
 def part1():
+    file = open("Day3\day3.txt",'r')
     total =0
     for line in file:
         line = line.strip()
         mid = int(len(line)/2)
         com1 = line[:mid]
         com2 = line[mid:]
-        dup = ''
         for c in com1:
             if c in com2:
-                dup = c
+                if c in string.ascii_uppercase:
+                    total += (ord(c)-38)
+                if c in string.ascii_lowercase:
+                    total += (ord(c)-96)
                 break
-        if dup in string.ascii_uppercase:
-            total += (ord(dup)-38)
-        if dup in string.ascii_lowercase:
-            total += (ord(dup)-96)
     print(total)
 
 def part2():
+    file = open("Day3\day3.txt",'r')
     total = 0
     i = 0
     group = ["","",""]
@@ -39,6 +38,7 @@ def part2():
             i+=1
     print(total)
 
+part1()
 part2()
 
 
