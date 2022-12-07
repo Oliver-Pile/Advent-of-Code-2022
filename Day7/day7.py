@@ -21,6 +21,13 @@ def search(dirs,total):
     else:
         return total
 
+def getNodes(node,list):
+    children = node.children
+    if len(children) == 0:
+        return list
+    else:
+        for c in children:
+            list.append(getNodes(c,list))
 #Loop through dir to find other dirs, then repeat ... (recursive?)
 #Once all dirs found (In list), get all their files and then do the maths
 def newSearch(node):
@@ -62,10 +69,12 @@ for line in file:
             if splitFile[1] not in currentNode.files.values():
                 currentNode.files.update({splitFile[0]:splitFile[1]})
 
-vals = {}
-for n in allNodes:
-    val = newSearch(n.children,0)
-    vals.update({n.name:val})
-print(vals)
-print("Yay?")
+x = getNodes(root,[root])
+print("")
+# vals = {}
+# for n in allNodes:
+#     val = newSearch(n.children,0)
+#     vals.update({n.name:val})
+# print(vals)
+# print("Yay?")
                 
