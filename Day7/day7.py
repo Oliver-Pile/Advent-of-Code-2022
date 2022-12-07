@@ -8,13 +8,15 @@ class Tree():
         
 allNodes = []  
         
-#Old doesn't work
+#Gets all the file values in the directory only, doesn't go into indirect files
 def search(dirs,total):
     if len(dirs) != 0:
         for d in dirs:
-            total = search(d.children,total)
+            total = search(d.children,total)#
+            sum = 0
             for f in d.files.keys():
-                total += int(f)
+                sum += int(f)
+            total += sum
         return total
     else:
         return total
