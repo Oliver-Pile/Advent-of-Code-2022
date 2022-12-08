@@ -12,30 +12,36 @@ allNodes = []
 def search(dirs,total):
     if len(dirs) != 0:
         for d in dirs:
-            total = search(d.children,total)#
+            total = search(d.children,total)
             sum = 0
             for f in d.files.keys():
                 sum += int(f)
-            total += sum
+            if sum<100000:
+                total += sum
         return total
     else:
         return total
 
 def getNodes(node,list):
     children = node.children
-    if len(children) == 0:
-        return list
-    else:
-        for c in children:
-            list.append(getNodes(c,list))
-#Loop through dir to find other dirs, then repeat ... (recursive?)
-#Once all dirs found (In list), get all their files and then do the maths
+    for c in children:
+        list = getNodes(c,list)
+        list.append(c)
+    return list
+
+
 def newSearch(node):
-    toCheck = [node]
+    toCheck = getNodes(node,[node])
+    total = 0
+    for n in toCheck:
+        for f in n.files.keys():
+            total += int(f)
+    return total
+
     
     
-#file = open("Day7\day7.txt")
-file = open("Day7\day7test.txt",'r')
+#file = open("Day7/day7.txt")
+file = open("Day7/day7test.txt",'r')
 
 root = Tree("/",None)
 currentNode = root
@@ -69,12 +75,16 @@ for line in file:
             if splitFile[1] not in currentNode.files.values():
                 currentNode.files.update({splitFile[0]:splitFile[1]})
 
-x = getNodes(root,[root])
-print("")
-# vals = {}
-# for n in allNodes:
-#     val = newSearch(n.children,0)
-#     vals.update({n.name:val})
-# print(vals)
+vals = {}
+for n in allNodes:
+    val = newSearch(n)
+    vals.update({n.name:val})
+total = 0
+print(vals)
+for v in vals.values():
+    if v<100000:
+        total += v
+
+print(total)
 # print("Yay?")
                 
