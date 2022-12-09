@@ -1,24 +1,81 @@
+#For each number in row, add it to a list. Then check after if any are bigger?
 def checkDir(value,pos,grid):
+    x = pos[0]
+    y = pos[1]
+    leftVal = []
+    rightVal = []
+    upVal = []
+    downVal = []
+    for left in range(x-1,-1,-1):
+        leftVal.append(int(grid[y][left]))
+    for right in range(x+1,len(grid)):
+        rightVal.append(int(grid[y][right]))
+    for up in range(y-1,-1,-1):
+        upVal.append(int(grid[up][x]))
+    for down in range(y+1,len(grid)):
+        downVal.append(int(grid[down][x]))
+    leftVis = True
+    rightVis = True
+    upVis = True
+    downVis = True
+    for v in leftVal:
+        if v>=value:
+            leftVis = False
+            break
+    for v in rightVal:
+        if v>=value:
+            rightVis = False
+            break    
+    for v in upVal:
+        if v>=value:
+            upVis = False
+            break
+    for v in downVal:
+        if v>=value:
+            downVis = False
+            break
+    return leftVis or rightVis or upVis or downVis
+
+def notCheckDir(value,pos,grid):
     vis = True
     x = pos[0]
     y = pos[1]
-    for left in range(x,-1):
-        if grid[y][left] > value:
-            vis = False
+    tmp = []
+    for left in range(x-1,-1,-1):
+        if int(grid[y][left]) > value:
+            tmp.append(False)
             break
-    for right in range(x,len(grid)):
-        if grid[y][right] > value:
-            vis = False
-    for up in range(y,-1):
-        if grid[up][x] > value:
-            vis = False
-    for down in range(y,len(grid)):
-        if grid[down][x] > value:
-            vis = False
+        else: tmp.append(True)
+    if False in tmp:
+        vis = False
+    tmp = []
+    for right in range(x+1,len(grid)):
+        if int(grid[y][right]) > value:
+            tmp.append(False)
+            break
+        else: tmp.append(True)
+    if False in tmp:
+        vis = False
+    tmp = []
+    for up in range(y-1,-1,-1):
+        if int(grid[up][x]) > value:
+            tmp.append(False)
+            break
+        else: tmp.append(True)
+    if False in tmp:
+        vis = False
+    tmp = []
+    for down in range(y+1,len(grid)):
+        if int(grid[down][x]) > value:
+            tmp.append(False)
+            break
+        else: tmp.append(True)
+    if False in tmp:
+        vis = False
     return vis
 
-# file = open("Day8/day8.txt",'r')
-file = open("Day8/day8test.txt",'r')
+file = open("Day8/day8.txt",'r')
+#file = open("Day8/day8test.txt",'r')
 
 grid = []
 for line in file:
@@ -28,9 +85,9 @@ for line in file:
 total = len(grid)*4 - 4
 #grid[y][x]
 
-for y in range(1,len(grid)):
-    for x in range(1,len(grid[0])):
-        vis = checkDir(grid[y][x],(x,y),grid)
+for y in range(1,len(grid)-1):
+    for x in range(1,len(grid[0])-1):
+        vis = checkDir(int(grid[y][x]),(x,y),grid)
         if vis:
             total += 1
 
