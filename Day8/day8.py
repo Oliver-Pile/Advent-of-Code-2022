@@ -36,44 +36,6 @@ def checkDir(value,pos,grid):
             break
     return leftVis or rightVis or upVis or downVis
 
-def notCheckDir(value,pos,grid):
-    vis = True
-    x = pos[0]
-    y = pos[1]
-    tmp = []
-    for left in range(x-1,-1,-1):
-        if int(grid[y][left]) > value:
-            tmp.append(False)
-            break
-        else: tmp.append(True)
-    if False in tmp:
-        vis = False
-    tmp = []
-    for right in range(x+1,len(grid)):
-        if int(grid[y][right]) > value:
-            tmp.append(False)
-            break
-        else: tmp.append(True)
-    if False in tmp:
-        vis = False
-    tmp = []
-    for up in range(y-1,-1,-1):
-        if int(grid[up][x]) > value:
-            tmp.append(False)
-            break
-        else: tmp.append(True)
-    if False in tmp:
-        vis = False
-    tmp = []
-    for down in range(y+1,len(grid)):
-        if int(grid[down][x]) > value:
-            tmp.append(False)
-            break
-        else: tmp.append(True)
-    if False in tmp:
-        vis = False
-    return vis
-
 file = open("Day8/day8.txt",'r')
 #file = open("Day8/day8test.txt",'r')
 
