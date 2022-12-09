@@ -1,4 +1,4 @@
-import string
+import string, math
 class Tree():
     def __init__(self, name,parent):
         self.name = name
@@ -7,20 +7,6 @@ class Tree():
         self.parent = parent
         
 allNodes = []  
-        
-#Gets all the file values in the directory only, doesn't go into indirect files
-def search(dirs,total):
-    if len(dirs) != 0:
-        for d in dirs:
-            total = search(d.children,total)
-            sum = 0
-            for f in d.files.keys():
-                sum += int(f)
-            if sum<100000:
-                total += sum
-        return total
-    else:
-        return total
 
 def getNodes(node,list):
     children = node.children
@@ -40,8 +26,7 @@ def newSearch(node):
 
     
     
-#file = open("Day7/day7.txt")
-file = open("Day7/day7test.txt",'r')
+file = open("Day7/day7.txt")
 
 root = Tree("/",None)
 currentNode = root
@@ -75,16 +60,24 @@ for line in file:
             if splitFile[1] not in currentNode.files.values():
                 currentNode.files.update({splitFile[0]:splitFile[1]})
 
-vals = {}
+vals = []
 for n in allNodes:
     val = newSearch(n)
-    vals.update({n.name:val})
+    vals.append(val)
 total = 0
-print(vals)
-for v in vals.values():
+for v in vals:
     if v<100000:
         total += v
-
 print(total)
-# print("Yay?")
+
+#For part 2
+rootSpace = newSearch(root)
+unused = 70000000-rootSpace
+remaining = 30000000 - unused
+smallest = math.inf
+for v in vals:
+    if v>remaining:
+        if v<smallest:
+            smallest = v
+print(smallest)
                 
