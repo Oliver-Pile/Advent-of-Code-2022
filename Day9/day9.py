@@ -1,5 +1,3 @@
-import math
-
 def nextTo(headPos, tailPos):
     return (abs(headPos[0] - tailPos[0]) in [0,1] and abs(headPos[1] - tailPos[1]) in [0,1])
 
@@ -24,18 +22,24 @@ def day9(part2):
     #file = open("Day9\part2test.txt",'r')
     
     visited = [[0,0]]
-    pos = {
-    0:[0,0],
-    1:[0,0],
-    2:[0,0],
-    3:[0,0],
-    4:[0,0],
-    5:[0,0],
-    6:[0,0],
-    7:[0,0],
-    8:[0,0],
-    9:[0,0]
-}
+    if part2:
+        pos = {
+        0:[0,0],
+        1:[0,0],
+        2:[0,0],
+        3:[0,0],
+        4:[0,0],
+        5:[0,0],
+        6:[0,0],
+        7:[0,0],
+        8:[0,0],
+        9:[0,0]
+    }
+    else:
+        pos = {
+        0:[0,0],
+        1:[0,0]
+    }
         
     for line in file:
         dir,val = line.split()
@@ -68,5 +72,6 @@ def day9(part2):
                                 visited.append(pos[key+1])
     print(len(visited))
 
+day9(False)
 day9(True)
         
