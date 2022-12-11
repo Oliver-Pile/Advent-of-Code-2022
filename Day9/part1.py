@@ -21,7 +21,7 @@ def intersection(listA,listB):
 #Try for horiz first
 
 file = open("Day9\day9.txt",'r')
-#file = open("Day9\day9test.txt",'r')
+#file = open("Day9\part1test.txt",'r')
 
 visited = [[0,0]]
 headPos = [0,0]

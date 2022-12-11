@@ -21,27 +21,21 @@ def intersection(listA,listB):
 #Try for horiz first
 def day9(part2):
     file = open("Day9\day9.txt",'r')
-    #file = open("Day9\day9test.txt",'r')
+    #file = open("Day9\part2test.txt",'r')
     
     visited = [[0,0]]
-    if part2:
-       pos = {
-        0:[0,0],
-        1:[0,0],
-        2:[0,0],
-        3:[0,0],
-        4:[0,0],
-        5:[0,0],
-        6:[0,0],
-        7:[0,0],
-        8:[0,0],
-        9:[0,0]
-    }
-    else: 
-        pos = {
-            0:[0,0],
-            1:[0,0]
-        }
+    pos = {
+    0:[0,0],
+    1:[0,0],
+    2:[0,0],
+    3:[0,0],
+    4:[0,0],
+    5:[0,0],
+    6:[0,0],
+    7:[0,0],
+    8:[0,0],
+    9:[0,0]
+}
         
     for line in file:
         dir,val = line.split()
@@ -54,7 +48,7 @@ def day9(part2):
                 pos[0][1] += 1
             if dir == 'D':
                 pos[0][1] -= 1
-            for key,val in pos.items():
+            for key in pos.keys():
                 if(key != len(pos)-1):
                     tailnext = nextTo(pos[key],pos[key+1])
                     if not tailnext:
@@ -71,8 +65,8 @@ def day9(part2):
                         else:
                             pos[key+1]=samePos[0]
                         if key+1 == len(pos)-1 and pos[key+1] not in visited:
-                                visited.append(pos[key])
+                                visited.append(pos[key+1])
     print(len(visited))
 
-day9(False)
+day9(True)
         
