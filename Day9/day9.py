@@ -19,40 +19,60 @@ def intersection(listA,listB):
 #Get intersection then move their
 #Set head move to single at a time.
 #Try for horiz first
+def day9(part2):
+    file = open("Day9\day9.txt",'r')
+    #file = open("Day9\day9test.txt",'r')
+    
+    visited = [[0,0]]
+    if part2:
+       pos = {
+        0:[0,0],
+        1:[0,0],
+        2:[0,0],
+        3:[0,0],
+        4:[0,0],
+        5:[0,0],
+        6:[0,0],
+        7:[0,0],
+        8:[0,0],
+        9:[0,0]
+    }
+    else: 
+        pos = {
+            0:[0,0],
+            1:[0,0]
+        }
+        
+    for line in file:
+        dir,val = line.split()
+        for v in range(int(val)):
+            if dir == 'L':
+                pos[0][0] -= 1
+            if dir == 'R':
+                pos[0][0] += 1
+            if dir == 'U':
+                pos[0][1] += 1
+            if dir == 'D':
+                pos[0][1] -= 1
+            for key,val in pos.items():
+                if(key != len(pos)-1):
+                    tailnext = nextTo(pos[key],pos[key+1])
+                    if not tailnext:
+                        validHead = surrounding(pos[key])
+                        validTail = surrounding(pos[key+1])
+                        samePos = intersection(validHead,validTail)
+                        sameHoriz = []
+                        for s in samePos:
+                            x,y = s
+                            if x == pos[key][0] or y == pos[key][1]:
+                                sameHoriz.append(s)
+                        if len(sameHoriz)==1:
+                            pos[key+1]=sameHoriz[0]
+                        else:
+                            pos[key+1]=samePos[0]
+                        if key+1 == len(pos)-1 and pos[key+1] not in visited:
+                                visited.append(pos[key])
+    print(len(visited))
 
-file = open("Day9\day9.txt",'r')
-#file = open("Day9\day9test.txt",'r')
-
-visited = [[0,0]]
-headPos = [0,0]
-tailPos = [0,0]
-for line in file:
-    dir,val = line.split()
-    for v in range(int(val)):
-        if dir == 'L':
-            headPos[0] -= 1
-        if dir == 'R':
-            headPos[0] += 1
-        if dir == 'U':
-            headPos[1] += 1
-        if dir == 'D':
-            headPos[1] -= 1
-        tailnext = nextTo(headPos,tailPos)
-        if not tailnext:
-            validHead = surrounding(headPos)
-            validTail = surrounding(tailPos)
-            samePos = intersection(validHead,validTail)
-            sameHoriz = []
-            for s in samePos:
-                x,y = s
-                if x == headPos[0] or y == headPos[1]:
-                    sameHoriz.append(s)
-            if len(sameHoriz)==1:
-                tailPos=sameHoriz[0]
-            else:
-                tailPos=samePos[0]
-            if tailPos not in visited:
-                visited.append(tailPos)
-print(len(visited))
-            
+day9(False)
         
